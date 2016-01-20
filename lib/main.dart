@@ -32,7 +32,7 @@ class FirechatAppState extends State {
     _user = "Guest${new math.Random().nextInt(1000)}";
     _firebase.onChildAdded.listen((Event event) {
       Map<String, String> message = event.snapshot.val();
-      _messages.insert(0, message);
+      setState(() => _messages.insert(0, message));
     });
     _messages = <Map<String, String>>[];
     super.initState();
