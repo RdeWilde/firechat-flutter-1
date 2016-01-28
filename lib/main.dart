@@ -46,9 +46,15 @@ class FirechatAppState extends State {
     _firebase.push().set(message);
   }
 
-  Widget _buildMessage(Map<String, String> message) {
-    return new Center(
-      child: new Text("${message['name']}: ${message['text']}")
+  Widget _buildMessage(int index) {
+    if (index >= _messages.length)
+      return null;
+    Map<String, String> message = _messages[index];
+    return new Container(
+      margin: const EdgeDims.all(3.0),
+      child: new Center(
+        child: new Text("${message['name']}: ${message['text']}")
+      )
     );
   }
 
@@ -66,17 +72,48 @@ class FirechatAppState extends State {
               margin: const EdgeDims.all(6.0),
               child: new Input(
                 key: _messageKey,
-                placeholder: 'Enter message',
-                keyboardType: KeyboardType.TEXT,
+                hintText: 'Enter message',
+                keyboardType: KeyboardType.text,
                 onSubmitted: _addMessage
               )
             ),
+
+            // This works, but doesn't adapt to items of varying size
+            // new Flexible(
+            //   child: new Container(
+            //     decoration: const BoxDecoration(backgroundColor: const Color(0x1100FF00)),
+            //     child: new ScrollableList(
+            //       itemExtent: 25.0,
+            //       children: new Iterable.generate(_messages.length)
+            //                             .map((index) => _buildMessage(index))
+            //     )
+            //   )
+            // ),
+
+            // This works, but is inefficient because it builds all the widgets
             new Flexible(
-              child: new ScrollableList(
-                itemExtent: 50.0,
-                children: _messages.map(_buildMessage)
+              child: new Container(
+                decoration: const BoxDecoration(backgroundColor: const Color(0x110000FF)),
+                child: new ScrollableViewport(
+                  child: new Column(
+                    children: new Iterable.generate(_messages.length)
+                                          .map((index) => _buildMessage(index))
+                                          .toList()
+                  )
+                )
               )
             ),
+
+            // This is the ideal solution
+            // new Flexible(
+            //   child: new Container(
+            //     decoration: const BoxDecoration(backgroundColor: const Color(0x11FF0000)),
+            //     child: new ScrollableMixedWidgetList(
+            //       builder: (BuildContext _, int index) => _buildMessage(index),
+            //       token: _messages.length
+            //     )
+            //   )
+            // ),
           ]
         )
       )
