@@ -1,3 +1,5 @@
 name: firechat_flutter
+services:
+  - firebase
 material-design-icons:
   - name: content/add
