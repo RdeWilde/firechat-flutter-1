@@ -29,7 +29,14 @@ You should see this on your device:
 
 ## Building for iOS
 
-We are currently adding support for third-party iOS services to the ```flutter``` tool. In the meantime, you'll need a custom compiled Flutter engine with Firebase enabled to use Firebase on iOS. Start with the latest master of http://github.com/flutter/engine and cherry-pick 7df7ff152d70735426a5e30d5c9b3afa73503839 from http://github.com/collinjackson/flutter_engine to add Firebase to your shell.
+We are currently adding support for third-party iOS services to the ```flutter``` tool. In the meantime, you'll need a custom compiled Flutter engine with Firebase enabled to use Firebase on iOS. Start with the latest master of http://github.com/flutter/engine and add a custom dep to your .gclient file:
+
+    "custom_deps": {
+       "src/third_party/firebase":
+         "https://github.com/collinjackson/firebase-sdk.git@master"
+    },
+
+Then run gclient sync. Next, cherry-pick 7df7ff152d70735426a5e30d5c9b3afa73503839 from http://github.com/collinjackson/flutter_engine to add Firebase to your shell.
 
 After building your engine with ninja, open the Harness project by running
 
