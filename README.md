@@ -17,9 +17,15 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 In the firechat-flutter directory, run ```pub get```.
 
-```flutter apk```
+    flutter apk
 
-```adb install -r build/app.apk```
+    adb install -r build/app.apk
+
+    adb shell am start -n com.example.firechat_flutter/org.domokit.sky.shell.SkyActivity
+
+You should see this on your device:
+
+<img src="screenshot_android.png">
 
 ## Building for iOS
 
@@ -35,4 +41,4 @@ Edit your Local.xcconfig:
     
 Then hit play. It should look like this:
 
-<img src="screenshot.png">
+<img src="screenshot_ios.png">
