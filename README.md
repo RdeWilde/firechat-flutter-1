@@ -15,15 +15,7 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 ## Building for Android
 
-In the firechat-flutter directory, run ```pub get```.
-
-    flutter apk
-
-    adb install -r build/app.apk
-
-    adb shell am start -n com.example.firechat_flutter/org.domokit.sky.shell.SkyActivity
-
-You should see this on your device:
+In the firechat-flutter directory, run ```pub get``` and ```flutter start```. You should see this on your device:
 
 ![Android Screenshot](screenshot_android.png)
 
