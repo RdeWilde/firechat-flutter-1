@@ -15,8 +15,6 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 ## Building for Android
 
-Make sure your checkouts of flutter and firebase-dart are in directories that are adjacent to this one. You should get your firebase-dart from https://github.com/flutter/firebase-dart for now (see [firebase/firebase-dart#71](https://github.com/firebase/firebase-dart/issues/71).
-
 In the firechat-flutter directory, run ```pub get```.
 
 ```flutter apk```

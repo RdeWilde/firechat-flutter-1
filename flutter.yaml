@@ -2,4 +2,9 @@ name: firechat_flutter
 services:
   - firebase
 material-design-icons:
+  - name: action/assessment
+  - name: navigation/menu
+  - name: action/account_balance
+  - name: action/help
   - name: content/add
+  - name: content/send

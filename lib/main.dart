@@ -25,14 +25,16 @@ class FirechatApp extends StatefulComponent {
 class FirechatAppState extends State {
   Firebase _firebase;
   List<Map<String, String>> _messages;
+  String _currentMessage;
   String _user;
 
   void initState() {
-    _firebase = new Firebase("https://firechat-ios.firebaseio-demo.com/");
+    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
+    _currentMessage = '';
     _firebase.onChildAdded.listen((Event event) {
       Map<String, String> message = event.snapshot.val();
-      setState(() => _messages.insert(0, message));
+      setState(() => _messages.add(message));
     });
     _messages = <Map<String, String>>[];
     super.initState();
@@ -51,6 +53,7 @@ class FirechatAppState extends State {
       return null;
     Map<String, String> message = _messages[index];
     return new Container(
+      key: new ValueKey(index),
       margin: const EdgeDims.all(3.0),
       child: new Center(
         child: new Text("${message['name']}: ${message['text']}")
@@ -60,60 +63,111 @@ class FirechatAppState extends State {
 
   GlobalKey _messageKey = new GlobalKey();
 
+  Widget _buildDrawer(BuildContext context) {
+    return new Drawer(
+      child: new Block(children: <Widget>[
+        new DrawerHeader(child: new Text(_user)),
+        new DrawerItem(
+          icon: 'action/assessment',
+          selected: true,
+          child: new Text('Stock List')
+        ),
+        new DrawerItem(
+          icon: 'action/account_balance',
+          onPressed: () {
+            showDialog(
+              context: context,
+              child: new Dialog(
+                title: new Text('Not Implemented'),
+                content: new Text('This feature has not yet been implemented.'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: new Text('USE IT')
+                  ),
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: new Text('OH WELL')
+                  ),
+                ]
+              )
+            );
+          },
+          child: new Text('Account Balance')
+        ),
+        new DrawerItem(
+          icon: 'device/dvr',
+          onPressed: () {
+            try {
+              debugDumpApp();
+            } catch (e, stack) {
+              debugPrint('Exception while dumping app:\n$e\n$stack');
+            }
+          },
+          child: new Text('Dump App to Console')
+        ),
+        new DrawerDivider(),
+        new DrawerItem(
+          icon: 'action/help',
+          child: new Text('Help & Feedback'))
+      ])
+    );
+  }
+
+  void _onMessageChanged(String message) {
+    setState(() {
+      _currentMessage = message;
+    });
+  }
+
+  bool get _isComposing => _currentMessage.length > 0;
+
+  Widget _buildTextComposer() {
+    return new Column(
+      children: <Widget>[
+        new Row(
+          children: <Widget>[
+            new Flexible(
+              child: new Input(
+                key: _messageKey,
+                hintText: 'Enter message',
+                keyboardType: KeyboardType.text,
+                onSubmitted: _addMessage,
+                onChanged: _onMessageChanged
+              )
+            ),
+            new FloatingActionButton(
+              child: new Icon(icon: 'content/send', size: IconSize.s18),
+              onPressed: () => _addMessage(_currentMessage),
+              backgroundColor: _isComposing ? null : Colors.grey[500],
+              mini: true
+            )
+          ]
+        )
+      ]
+    );
+  }
+
   Widget build(BuildContext context) {
     return new Scaffold(
       toolBar: new ToolBar(
         center: new Text("Chatting as $_user")
       ),
+      drawer: _buildDrawer(context),
       body: new Material(
         child: new Column(
           children: [
-            new Container(
-              margin: const EdgeDims.all(6.0),
-              child: new Input(
-                key: _messageKey,
-                hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
-                onSubmitted: _addMessage
-              )
-            ),
-
-            // This works, but doesn't adapt to items of varying size
-            // new Flexible(
-            //   child: new Container(
-            //     decoration: const BoxDecoration(backgroundColor: const Color(0x1100FF00)),
-            //     child: new ScrollableList(
-            //       itemExtent: 25.0,
-            //       children: new Iterable.generate(_messages.length)
-            //                             .map((index) => _buildMessage(index))
-            //     )
-            //   )
-            // ),
-
-            // This works, but is inefficient because it builds all the widgets
             new Flexible(
-              child: new Container(
-                decoration: const BoxDecoration(backgroundColor: const Color(0x110000FF)),
-                child: new ScrollableViewport(
-                  child: new Column(
-                    children: new Iterable.generate(_messages.length)
-                                          .map((index) => _buildMessage(index))
-                                          .toList()
-                  )
-                )
+              child: new ScrollableMixedWidgetList(
+                builder: (BuildContext _, int index) => _buildMessage(index),
+                token: _messages.length
               )
             ),
-
-            // This is the ideal solution
-            // new Flexible(
-            //   child: new Container(
-            //     decoration: const BoxDecoration(backgroundColor: const Color(0x11FF0000)),
-            //     child: new ScrollableMixedWidgetList(
-            //       builder: (BuildContext _, int index) => _buildMessage(index),
-            //       token: _messages.length
-            //     )
-            //   )
-            // ),
+            _buildTextComposer(),
           ]
         )
       )
