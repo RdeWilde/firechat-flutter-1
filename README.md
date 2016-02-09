@@ -23,4 +23,16 @@ In the firechat-flutter directory, run ```pub get```.
 
 ## Building for iOS
 
-We are currently adding support for third-party iOS services to the ```flutter``` tool. In the meantime, you'll need a custom compiled Flutter engine with firebase enabled to use Firebase on iOS. Contact jackson@google.com for help with this.
+We are currently adding support for third-party iOS services to the ```flutter``` tool. In the meantime, you'll need a custom compiled Flutter engine with Firebase enabled to use Firebase on iOS. Start with the latest master of http://github.com/flutter/engine and cherry-pick 7df7ff152d70735426a5e30d5c9b3afa73503839 from http://github.com/collinjackson/flutter_engine to add Firebase to your shell.
+
+After building your engine with ninja, open the Harness project by running
+
+    open out/ios_sim_Debug/Flutter/FlutterApplication.xcodeproj/
+    
+Edit your Local.xcconfig:
+
+    FLUTTER_APPLICATION_PATH=/path/to/firechat-flutter
+    
+Then hit play. It should look like this:
+
+<img src="screenshot.png">
