@@ -25,7 +25,7 @@ In the firechat-flutter directory, run ```pub get```.
 
 You should see this on your device:
 
-<img src="screenshot_android.png">
+![Android Screenshot](screenshot_android.png)
 
 ## Building for iOS
 
@@ -41,4 +41,4 @@ Edit your Local.xcconfig:
     
 Then hit play. It should look like this:
 
-<img src="screenshot_ios.png">
+![iOS Screenshot](screenshot_ios.png)
