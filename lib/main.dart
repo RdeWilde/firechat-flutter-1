@@ -31,6 +31,7 @@ class FirechatAppState extends State {
   void initState() {
     _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
+    _currentMessage = '';
     _firebase.onChildAdded.listen((Event event) {
       Map<String, String> message = event.snapshot.val();
       setState(() => _messages.add(message));
@@ -45,10 +46,6 @@ class FirechatAppState extends State {
       'text': text,
     };
     _firebase.push().set(message);
-    setState(() {
-      _currentMessage = null;
-      _messageKey.currentState.setText('');
-    });
   }
 
   Widget _buildMessage(int index) {
@@ -56,6 +53,7 @@ class FirechatAppState extends State {
       return null;
     Map<String, String> message = _messages[index];
     return new Container(
+      key: new ValueKey(index),
       margin: const EdgeDims.all(3.0),
       child: new Center(
         child: new Text("${message['name']}: ${message['text']}")
@@ -126,7 +124,7 @@ class FirechatAppState extends State {
     });
   }
 
-  bool get _isComposing => _currentMessage == null || _currentMessage.length == null > 0;
+  bool get _isComposing => _currentMessage.length > 0;
 
   Widget _buildTextComposer() {
     return new Column(
@@ -144,7 +142,7 @@ class FirechatAppState extends State {
             ),
             new FloatingActionButton(
               child: new Icon(icon: 'content/send', size: IconSize.s18),
-              onPressed: () => _addMessage(_message),
+              onPressed: () => _addMessage(_currentMessage),
               backgroundColor: _isComposing ? null : Colors.grey[500],
               mini: true
             )
