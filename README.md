@@ -4,6 +4,8 @@ Firechat is a simple, extensible chat widget powered by [Firebase](https://www.f
 It is intended to serve as a concise, documented foundation for chat products built on Firebase.
 It works out of the box, and is easily extended.
 
+This project assumes that your checkout of Flutter is in an adjacent directory ```flutter```. If it's somewhere else, you can edit the path in pubspec.yaml.
+
 ## Getting Started with Firebase
 
 Firechat requires Firebase in order to store data. You can
