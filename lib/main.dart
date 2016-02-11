@@ -22,6 +22,22 @@ class FirechatApp extends StatefulComponent {
   State createState() => new FirechatAppState();
 }
 
+class ChatMessage extends StatelessComponent {
+  ChatMessage(Map<String, String> source)
+    : name = source['name'], text = source['text'];
+  final String name;
+  final String text;
+
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: const EdgeDims.all(3.0),
+      child: new Center(
+        child: new Text("$name: $text")
+      )
+    );
+  }
+}
+
 class FirechatAppState extends State {
   Firebase _firebase;
   List<Map<String, String>> _messages;
@@ -33,8 +49,7 @@ class FirechatAppState extends State {
     _user = "Guest${new math.Random().nextInt(1000)}";
     _currentMessage = '';
     _firebase.onChildAdded.listen((Event event) {
-      Map<String, String> message = event.snapshot.val();
-      setState(() => _messages.add(message));
+      setState(() => _messages.add(event.snapshot.val()));
     });
     _messages = <Map<String, String>>[];
     super.initState();
@@ -46,19 +61,6 @@ class FirechatAppState extends State {
       'text': text,
     };
     _firebase.push().set(message);
-  }
-
-  Widget _buildMessage(int index) {
-    if (index >= _messages.length)
-      return null;
-    Map<String, String> message = _messages[index];
-    return new Container(
-      key: new ValueKey(index),
-      margin: const EdgeDims.all(3.0),
-      child: new Center(
-        child: new Text("${message['name']}: ${message['text']}")
-      )
-    );
   }
 
   GlobalKey _messageKey = new GlobalKey();
@@ -162,9 +164,9 @@ class FirechatAppState extends State {
         child: new Column(
           children: [
             new Flexible(
-              child: new ScrollableMixedWidgetList(
-                builder: (BuildContext _, int index) => _buildMessage(index),
-                token: _messages.length
+              child: new Block(
+                scrollAnchor: ViewportAnchor.end,
+                children: _messages.map((m) => new ChatMessage(m)).toList()
               )
             ),
             _buildTextComposer(),
