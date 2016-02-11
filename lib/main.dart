@@ -49,8 +49,6 @@ class FirechatAppState extends State {
   }
 
   Widget _buildMessage(int index) {
-    if (index >= _messages.length)
-      return null;
     Map<String, String> message = _messages[index];
     return new Container(
       key: new ValueKey(index),
@@ -162,9 +160,11 @@ class FirechatAppState extends State {
         child: new Column(
           children: [
             new Flexible(
-              child: new ScrollableMixedWidgetList(
-                builder: (BuildContext _, int index) => _buildMessage(index),
-                token: _messages.length
+              child: new Block(
+                scrollAnchor: ViewportAnchor.end,
+                children: new Iterable.generate(_messages.length)
+                                      .map((index) => _buildMessage(index))
+                                      .toList()
               )
             ),
             _buildTextComposer(),
