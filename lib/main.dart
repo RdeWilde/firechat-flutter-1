@@ -2,20 +2,16 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:flutter/material.dart';
 import 'package:firebase/firebase.dart';
+
+import 'package:flutter/material.dart';
+
 import 'dart:math' as math;
 
-void main() {
-  runApp(
-    new MaterialApp(
-      title: "Firechat",
-      routes: <String, RouteBuilder>{
-        '/': (RouteArguments args) => new FirechatApp()
-      }
-    )
-  );
-}
+import 'chat.dart';
+import 'settings.dart';
+
+void main() => runApp(new FirechatApp());
 
 class FirechatApp extends StatefulComponent {
   @override
@@ -40,22 +36,22 @@ class ChatMessage extends StatelessComponent {
 
 class FirechatAppState extends State {
   Firebase _firebase;
-  List<Map<String, String>> _messages;
-  String _currentMessage;
   String _user;
+  List<Map<String, String>> _messages;
+  double _fontSize;
 
-  void initState() {
+  @override initState() {
+    super.initState();
     _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _currentMessage = '';
+    _fontSize = kSmallFontSize;
     _firebase.onChildAdded.listen((Event event) {
       setState(() => _messages.add(event.snapshot.val()));
     });
     _messages = <Map<String, String>>[];
-    super.initState();
   }
 
-  void _addMessage(String text) {
+  void _handleMessageAdded(String text) {
     Map<String, String> message = {
       'name': _user,
       'text': text,
@@ -63,116 +59,28 @@ class FirechatAppState extends State {
     _firebase.push().set(message);
   }
 
-  GlobalKey _messageKey = new GlobalKey();
-
-  Widget _buildDrawer(BuildContext context) {
-    return new Drawer(
-      child: new Block(children: <Widget>[
-        new DrawerHeader(child: new Text(_user)),
-        new DrawerItem(
-          icon: 'action/assessment',
-          selected: true,
-          child: new Text('Stock List')
-        ),
-        new DrawerItem(
-          icon: 'action/account_balance',
-          onPressed: () {
-            showDialog(
-              context: context,
-              child: new Dialog(
-                title: new Text('Not Implemented'),
-                content: new Text('This feature has not yet been implemented.'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: new Text('USE IT')
-                  ),
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: new Text('OH WELL')
-                  ),
-                ]
-              )
-            );
-          },
-          child: new Text('Account Balance')
-        ),
-        new DrawerItem(
-          icon: 'device/dvr',
-          onPressed: () {
-            try {
-              debugDumpApp();
-            } catch (e, stack) {
-              debugPrint('Exception while dumping app:\n$e\n$stack');
-            }
-          },
-          child: new Text('Dump App to Console')
-        ),
-        new DrawerDivider(),
-        new DrawerItem(
-          icon: 'action/help',
-          child: new Text('Help & Feedback'))
-      ])
-    );
-  }
-
-  void _onMessageChanged(String message) {
-    setState(() {
-      _currentMessage = message;
-    });
-  }
-
-  bool get _isComposing => _currentMessage.length > 0;
-
-  Widget _buildTextComposer() {
-    return new Column(
-      children: <Widget>[
-        new Row(
-          children: <Widget>[
-            new Flexible(
-              child: new Input(
-                key: _messageKey,
-                hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
-                onSubmitted: _addMessage,
-                onChanged: _onMessageChanged
-              )
-            ),
-            new FloatingActionButton(
-              child: new Icon(icon: 'content/send', size: IconSize.s18),
-              onPressed: () => _addMessage(_currentMessage),
-              backgroundColor: _isComposing ? null : Colors.grey[500],
-              mini: true
-            )
-          ]
-        )
-      ]
-    );
-  }
-
   Widget build(BuildContext context) {
-    return new Scaffold(
-      toolBar: new ToolBar(
-        center: new Text("Chatting as $_user")
+    return new MaterialApp(
+      title: "Firechat",
+      theme: new ThemeData(
+        brightness: ThemeBrightness.light,
+        primarySwatch: Colors.purple,
+        accentColor: Colors.orangeAccent[200]
       ),
-      drawer: _buildDrawer(context),
-      body: new Material(
-        child: new Column(
-          children: [
-            new Flexible(
-              child: new Block(
-                scrollAnchor: ViewportAnchor.end,
-                children: _messages.map((m) => new ChatMessage(m)).toList()
-              )
-            ),
-            _buildTextComposer(),
-          ]
+      routes: <String, RouteBuilder>{
+        '/': (RouteArguments args) => new ChatScreen(
+          fontSize: _fontSize,
+          onMessageAdded: _handleMessageAdded,
+          user: _user,
+          messages: _messages
+        ),
+        '/settings': (RouteArguments args) => new SettingsScreen(
+          fontSize: _fontSize,
+          onFontSizeChanged: (double fontSize) {
+            setState(() => _fontSize = fontSize);
+          }
         )
-      )
+      }
     );
   }
 }
