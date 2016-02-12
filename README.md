@@ -24,6 +24,8 @@ In the firechat-flutter directory, run ```pub get``` and ```flutter start```. Yo
 
 ![Android Screenshot](screenshot_android.png)
 
+Use ```flutter start --no_checked``` if you want to remove the "Slow Mode" banner and improve performance.
+
 ## Building for iOS
 
 We are currently adding support for third-party iOS services to the ```flutter``` tool. In the meantime, you'll need a custom compiled Flutter engine with Firebase enabled to use Firebase on iOS. Start with the latest master of http://github.com/flutter/engine and add a custom dep to your .gclient file:
