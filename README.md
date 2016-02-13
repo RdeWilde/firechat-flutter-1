@@ -2,12 +2,9 @@
 
 Firechat is a simple, extensible chat widget powered by
 [Firebase](https://www.firebase.com/?utm_source=firechat). This version
-is built with [Flutter](https://flutter.io).
+is built with [Flutter](https://flutter.io). The app is built in several steps of increasing complexity.
 
-It is intended to serve as a concise, documented foundation for chat products built on Firebase.
-It works out of the box, and is easily extended.
-
-This project assumes that your checkout of Flutter is in an adjacent directory ```flutter```. If it's somewhere else, you can edit the path in pubspec.yaml.
+These projects assume that your checkout of Flutter is in an adjacent directory ```flutter```. If it's somewhere else, you can edit the path in pubspec.yaml.
 
 ## Getting Started with Firebase
 
@@ -20,7 +17,7 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 ## Building for Android
 
-In the firechat-flutter directory, run ```pub get``` and ```flutter start```. You should see this on your device:
+In the directory of the step you want to build, run ```pub get``` and ```flutter start```. You should see this on your device:
 
 ![Android Screenshot](screenshot_android.png)
 
