@@ -33,8 +33,6 @@ class ChatScreenState extends State {
     super.initState();
   }
 
-  GlobalKey _messageKey = new GlobalKey();
-
   Widget _buildDrawer(BuildContext context) {
     return new Drawer(
       child: new Block(children: <Widget>[
@@ -93,7 +91,6 @@ class ChatScreenState extends State {
           children: <Widget>[
             new Flexible(
               child: new Input(
-                key: _messageKey,
                 value: _currentMessage,
                 hintText: 'Enter message',
                 keyboardType: KeyboardType.text,
