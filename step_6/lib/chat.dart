@@ -119,21 +119,19 @@ class ChatScreenState extends State {
         center: new Text("Chatting as ${config.user}")
       ),
       drawer: _buildDrawer(context),
-      body: new Material(
-        child: new DefaultTextStyle(
-          style: Theme.of(context).text.body1.copyWith(fontSize: config.fontSize),
-          child: new Column(
-            children: [
-              new Flexible(
-                child: new Block(
-                  padding: const EdgeDims.symmetric(horizontal: 8.0),
-                  scrollAnchor: ViewportAnchor.end,
-                  children: config.messages.map((m) => new ChatMessage(m)).toList()
-                )
-              ),
-              _buildTextComposer(),
-            ]
-          )
+      body: new DefaultTextStyle(
+        style: Theme.of(context).text.body1.copyWith(fontSize: config.fontSize),
+        child: new Column(
+          children: [
+            new Flexible(
+              child: new Block(
+                padding: const EdgeDims.symmetric(horizontal: 8.0),
+                scrollAnchor: ViewportAnchor.end,
+                children: config.messages.map((m) => new ChatMessage(m)).toList()
+              )
+            ),
+            _buildTextComposer(),
+          ]
         )
       )
     );

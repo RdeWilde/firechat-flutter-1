@@ -2,8 +2,6 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:firebase/firebase.dart';
-
 import 'package:flutter/material.dart';
 
 import 'dart:math' as math;
@@ -32,49 +30,13 @@ class ChatScreen extends StatefulComponent {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  Firebase _firebase;
   String _user;
-  List<Map<String, String>> _messages;
   InputValue _currentMessage;
 
   void initState() {
-    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _firebase.onChildAdded.listen((Event event) {
-      setState(() => _messages.add(event.snapshot.val()));
-    });
-    _messages = <Map<String, String>>[];
     _currentMessage = InputValue.empty;
     super.initState();
-  }
-
-  Widget _buildDrawer(BuildContext context) {
-    return new Drawer(
-      child: new Block(children: <Widget>[
-        new DrawerHeader(child: new Text(_user ?? '')),
-        new DrawerItem(
-          icon: 'action/help',
-          child: new Text('Help & Feedback'),
-          onPressed: () {
-            showDialog(
-              context: context,
-              child: new Dialog(
-                title: new Text('Need help?'),
-                content: new Text('Email flutter-discuss@googlegroups.com.'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: new Text('OK')
-                  ),
-                ]
-              )
-            );
-          }
-        )
-      ])
-    );
   }
 
   void _handleMessageChanged(InputValue message) {
@@ -84,11 +46,6 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleMessageAdded(InputValue value) {
-    Map<String, String> message = {
-      'name': _user,
-      'text': value.text,
-    };
-    _firebase.push().set(message);
     setState(() {
       _currentMessage = InputValue.empty;
     });
@@ -130,33 +87,7 @@ class ChatScreenState extends State<ChatScreen> {
       toolBar: new ToolBar(
         center: new Text("Chatting as $_user")
       ),
-      drawer: _buildDrawer(context),
-      body: new Column(
-        children: [
-          new Flexible(
-            child: new Block(
-              padding: const EdgeDims.symmetric(horizontal: 8.0),
-              scrollAnchor: ViewportAnchor.end,
-              children: _messages.map((m) => new ChatMessage(m)).toList()
-            )
-          ),
-          _buildTextComposer(),
-        ]
-      )
-    );
-  }
-}
-
-class ChatMessage extends StatelessComponent {
-  ChatMessage(Map<String, String> source)
-    : name = source['name'], text = source['text'];
-  final String name;
-  final String text;
-
-  Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeDims.all(3.0),
-      child: new Text("$name: $text")
+      body: _buildTextComposer()
     );
   }
 }

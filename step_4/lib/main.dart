@@ -48,35 +48,6 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
   }
 
-  Widget _buildDrawer(BuildContext context) {
-    return new Drawer(
-      child: new Block(children: <Widget>[
-        new DrawerHeader(child: new Text(_user ?? '')),
-        new DrawerItem(
-          icon: 'action/help',
-          child: new Text('Help & Feedback'),
-          onPressed: () {
-            showDialog(
-              context: context,
-              child: new Dialog(
-                title: new Text('Need help?'),
-                content: new Text('Email flutter-discuss@googlegroups.com.'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: new Text('OK')
-                  ),
-                ]
-              )
-            );
-          }
-        )
-      ])
-    );
-  }
-
   void _handleMessageChanged(InputValue message) {
     setState(() {
       _currentMessage = message;
@@ -130,7 +101,6 @@ class ChatScreenState extends State<ChatScreen> {
       toolBar: new ToolBar(
         center: new Text("Chatting as $_user")
       ),
-      drawer: _buildDrawer(context),
       body: new Column(
         children: [
           new Flexible(

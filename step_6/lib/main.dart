@@ -18,22 +18,6 @@ class FirechatApp extends StatefulComponent {
   State createState() => new FirechatAppState();
 }
 
-class ChatMessage extends StatelessComponent {
-  ChatMessage(Map<String, String> source)
-    : name = source['name'], text = source['text'];
-  final String name;
-  final String text;
-
-  Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeDims.all(3.0),
-      child: new Center(
-        child: new Text("$name: $text")
-      )
-    );
-  }
-}
-
 class FirechatAppState extends State {
   Firebase _firebase;
   String _user;
