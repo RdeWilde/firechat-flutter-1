@@ -21,7 +21,7 @@ In the directory of the step you want to build, run ```pub get``` and ```flutter
 
 ![Android Screenshot](screenshot_android.png)
 
-Use ```flutter start --no_checked``` if you want to remove the "Slow Mode" banner and improve performance.
+Use ```flutter start --no-checked``` if you want to remove the "Slow Mode" banner and improve performance.
 
 ## Building for iOS
 
