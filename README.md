@@ -17,7 +17,7 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 ## Building for Android
 
-In the directory of the step you want to build, run ```pub get``` and ```flutter start```. You should see this on your device:
+In the directory of the step you want to build, run ```pub get``` and ```flutter start```. If you're running step 6, you should see this on your device:
 
 ![Android Screenshot](screenshot_android.png)
 
