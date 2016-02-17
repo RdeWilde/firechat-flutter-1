@@ -9,7 +9,9 @@ These projects assume that your checkout of Flutter is in an adjacent directory 
 ## Getting Started with Firebase
 
 Firechat requires Firebase in order to store data. You can
-[sign up here](https://www.firebase.com/signup/?utm_source=firechat) for a free account.
+[sign up](https://www.firebase.com/signup/?utm_source=firechat) for a free account.
+
+The [firebase-dart](https://github.com/flutter/firebase-dart) library is [documented here](https://www.dartdocs.org/documentation/firebase/latest/firebase/firebase-library.html).
 
 ## Getting Started with Flutter
 
