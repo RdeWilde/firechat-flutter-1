@@ -40,7 +40,7 @@ class FirechatAppState extends State {
       routes: <String, RouteBuilder>{
         '/': (RouteArguments args) => new ChatScreen(
           fontSize: _fontSize,
-          firebase: _firebase,
+          firebase: _firebase.root(),
           user: _user
         ),
         '/settings': (RouteArguments args) => new SettingsScreen(
