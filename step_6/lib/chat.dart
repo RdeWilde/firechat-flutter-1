@@ -2,6 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
+
+import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
 class ChatMessage extends StatelessComponent {
@@ -19,22 +22,34 @@ class ChatMessage extends StatelessComponent {
 }
 
 class ChatScreen extends StatefulComponent {
-  const ChatScreen({ this.fontSize, this.user, this.messages, this.onMessageAdded });
+  const ChatScreen({ this.fontSize, this.user, this.firebase });
   final double fontSize;
   final String user;
-  final List<Map<String, String>> messages;
-  final ValueChanged<String> onMessageAdded;
+  final Firebase firebase;
 
   @override
   State createState() => new ChatScreenState();
 }
 
-class ChatScreenState extends State {
+class ChatScreenState extends State<ChatScreen> {
   InputValue _currentMessage;
+  List<Map<String, String>> _messages;
+  StreamSubscription _onChildAdded;
 
+  @override
   void initState() {
     _currentMessage = InputValue.empty;
+    _messages = <Map<String, String>>[];
+    _onChildAdded = config.firebase.root().onChildAdded.listen((Event event) {
+      setState(() => _messages.add(event.snapshot.val()));
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onChildAdded.cancel();
+    super.dispose();
   }
 
   Widget _buildDrawer(BuildContext context) {
@@ -73,14 +88,18 @@ class ChatScreenState extends State {
     );
   }
 
-  void _handleMessageChanged(InputValue message) {
+  void _handleMessageChanged(InputValue value) {
     setState(() {
-      _currentMessage = message;
+      _currentMessage = value;
     });
   }
 
   void _handleMessageAdded(InputValue value) {
-    config.onMessageAdded(value.text);
+    Map<String, String> message = {
+      'name': config.user,
+      'text': value.text,
+    };
+    config.firebase.push().set(message);
     setState(() {
       _currentMessage = InputValue.empty;
     });
@@ -131,7 +150,7 @@ class ChatScreenState extends State {
               child: new Block(
                 padding: const EdgeDims.symmetric(horizontal: 8.0),
                 scrollAnchor: ViewportAnchor.end,
-                children: config.messages.map((m) => new ChatMessage(m)).toList()
+                children: _messages.map((m) => new ChatMessage(m)).toList()
               )
             ),
             _buildTextComposer(),
