@@ -2,11 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:firebase/firebase.dart';
-
-import 'package:flutter/material.dart';
-
 import 'dart:math' as math;
+
+import 'package:firebase/firebase.dart';
+import 'package:flutter/material.dart';
 
 import 'chat.dart';
 import 'settings.dart';
@@ -21,7 +20,6 @@ class FirechatApp extends StatefulComponent {
 class FirechatAppState extends State {
   Firebase _firebase;
   String _user;
-  List<Map<String, String>> _messages;
   double _fontSize;
 
   @override initState() {
@@ -29,18 +27,6 @@ class FirechatAppState extends State {
     _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
     _fontSize = kSmallFontSize;
-    _firebase.onChildAdded.listen((Event event) {
-      setState(() => _messages.add(event.snapshot.val()));
-    });
-    _messages = <Map<String, String>>[];
-  }
-
-  void _handleMessageAdded(String text) {
-    Map<String, String> message = {
-      'name': _user,
-      'text': text,
-    };
-    _firebase.push().set(message);
   }
 
   Widget build(BuildContext context) {
@@ -54,9 +40,8 @@ class FirechatAppState extends State {
       routes: <String, RouteBuilder>{
         '/': (RouteArguments args) => new ChatScreen(
           fontSize: _fontSize,
-          onMessageAdded: _handleMessageAdded,
-          user: _user,
-          messages: _messages
+          firebase: _firebase,
+          user: _user
         ),
         '/settings': (RouteArguments args) => new SettingsScreen(
           fontSize: _fontSize,
