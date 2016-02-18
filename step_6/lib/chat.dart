@@ -40,7 +40,7 @@ class ChatScreenState extends State<ChatScreen> {
   void initState() {
     _currentMessage = InputValue.empty;
     _messages = <Map<String, String>>[];
-    _onChildAdded = config.firebase.root().onChildAdded.listen((Event event) {
+    _onChildAdded = config.firebase.onChildAdded.listen((Event event) {
       setState(() => _messages.add(event.snapshot.val()));
     });
     super.initState();
