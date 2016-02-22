@@ -85,8 +85,8 @@ class ChatScreenState extends State<ChatScreen> {
               margin: const EdgeDims.symmetric(horizontal: 4.0),
               child: new FloatingActionButton(
                 child: new Icon(icon: 'content/send', size: IconSize.s18),
-                onPressed: () => _handleMessageAdded(_currentMessage),
-                backgroundColor: _isComposing ? null : Colors.grey[500],
+                onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
+                backgroundColor: _isComposing ? null : Theme.of(context).disabledColor,
                 mini: true
               )
             )
