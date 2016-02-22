@@ -6,22 +6,18 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new FirechatApp());
-
-class FirechatApp extends StatelessComponent {
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "Firechat",
-      theme: new ThemeData(
-        brightness: ThemeBrightness.light,
-        primarySwatch: Colors.purple,
-        accentColor: Colors.orangeAccent[200]
-      ),
-      routes: <String, RouteBuilder>{
-        '/': (RouteArguments args) => new ChatScreen(),
-      }
-    );
-  }
+void main() {
+  runApp(new MaterialApp(
+    title: "Firechat",
+    theme: new ThemeData(
+      brightness: ThemeBrightness.light,
+      primarySwatch: Colors.purple,
+      accentColor: Colors.orangeAccent[200]
+    ),
+    routes: <String, RouteBuilder>{
+      '/': (RouteArguments args) => new ChatScreen()
+    }
+  ));
 }
 
 class ChatScreen extends StatefulComponent {

@@ -4,17 +4,13 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new FirechatApp());
-
-class FirechatApp extends StatelessComponent {
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "Firechat",
-      routes: <String, RouteBuilder>{
-        '/': (RouteArguments args) => new Scaffold(
-          toolBar: new ToolBar(center: new Text("Firechat"))
-        )
-      }
-    );
-  }
+void main() {
+  runApp(new MaterialApp(
+    title: "Firechat",
+    routes: <String, RouteBuilder>{
+      '/': (RouteArguments args) => new Scaffold(
+        toolBar: new ToolBar(center: new Text("Firechat"))
+      )
+    }
+  ));
 }
