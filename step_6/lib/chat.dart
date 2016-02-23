@@ -108,6 +108,7 @@ class ChatScreenState extends State<ChatScreen> {
   bool get _isComposing => _currentMessage.text.length > 0;
 
   Widget _buildTextComposer() {
+    ThemeData themeData = Theme.of(context);
     return new Column(
       children: <Widget>[
         new Row(
@@ -123,11 +124,10 @@ class ChatScreenState extends State<ChatScreen> {
             ),
             new Container(
               margin: const EdgeDims.symmetric(horizontal: 4.0),
-              child: new FloatingActionButton(
-                child: new Icon(icon: 'content/send', size: IconSize.s18),
+              child: new IconButton(
+                icon: 'content/send',
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
-                backgroundColor: _isComposing ? null : Theme.of(context).disabledColor,
-                mini: true
+                color: _isComposing ? themeData.accentColor : themeData.disabledColor
               )
             )
           ]

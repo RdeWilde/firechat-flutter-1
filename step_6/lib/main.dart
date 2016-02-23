@@ -35,7 +35,7 @@ class FirechatAppState extends State {
       theme: new ThemeData(
         brightness: ThemeBrightness.light,
         primarySwatch: Colors.purple,
-        accentColor: Colors.orangeAccent[200]
+        accentColor: Colors.orangeAccent[400]
       ),
       routes: <String, RouteBuilder>{
         '/': (RouteArguments args) => new ChatScreen(
