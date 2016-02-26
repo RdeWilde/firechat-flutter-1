@@ -1,6 +1,4 @@
 name: firechat_flutter
-services:
-  - firebase
 material-design-icons:
   - name: action/help
   - name: action/settings
