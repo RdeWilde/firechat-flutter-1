@@ -29,17 +29,15 @@ class ChatScreen extends StatefulComponent {
 class ChatScreenState extends State<ChatScreen> {
   Firebase _firebase;
   String _user;
-  List<Map<String, String>> _messages;
-  InputValue _currentMessage;
+  List<Map<String, String>> _messages = <Map<String, String>>[];
+  InputValue _currentMessage = InputValue.empty;
 
   void initState() {
-    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _firebase.onChildAdded.listen((Event event) {
+    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/")
+      ..onChildAdded.listen((Event event) {
       setState(() => _messages.add(event.snapshot.val()));
     });
-    _messages = <Map<String, String>>[];
-    _currentMessage = InputValue.empty;
     super.initState();
   }
 
@@ -72,9 +70,9 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _handleMessageChanged(InputValue message) {
+  void _handleMessageChanged(InputValue value) {
     setState(() {
-      _currentMessage = message;
+      _currentMessage = value;
     });
   }
 
@@ -101,7 +99,6 @@ class ChatScreenState extends State<ChatScreen> {
               child: new Input(
                 value: _currentMessage,
                 hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
                 onSubmitted: _handleMessageAdded,
                 onChanged: _handleMessageChanged
               )
@@ -127,7 +124,7 @@ class ChatScreenState extends State<ChatScreen> {
       ),
       drawer: _buildDrawer(context),
       body: new Column(
-        children: [
+        children: <Widget>[
           new Flexible(
             child: new Block(
               padding: const EdgeDims.symmetric(horizontal: 8.0),

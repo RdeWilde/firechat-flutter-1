@@ -32,14 +32,12 @@ class ChatScreen extends StatefulComponent {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  InputValue _currentMessage;
-  List<Map<String, String>> _messages;
+  List<Map<String, String>> _messages = <Map<String, String>>[];
+  InputValue _currentMessage = InputValue.empty;
   StreamSubscription _onChildAdded;
 
   @override
   void initState() {
-    _currentMessage = InputValue.empty;
-    _messages = <Map<String, String>>[];
     _onChildAdded = config.firebase.onChildAdded.listen((Event event) {
       setState(() => _messages.add(event.snapshot.val()));
     });
@@ -117,7 +115,6 @@ class ChatScreenState extends State<ChatScreen> {
               child: new Input(
                 value: _currentMessage,
                 hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
                 onSubmitted: _handleMessageAdded,
                 onChanged: _handleMessageChanged
               )
@@ -145,7 +142,7 @@ class ChatScreenState extends State<ChatScreen> {
       body: new DefaultTextStyle(
         style: Theme.of(context).text.body1.copyWith(fontSize: config.fontSize),
         child: new Column(
-          children: [
+          children: <Widget>[
             new Flexible(
               child: new Block(
                 padding: const EdgeDims.symmetric(horizontal: 8.0),

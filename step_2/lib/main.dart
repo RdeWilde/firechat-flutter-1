@@ -27,17 +27,16 @@ class ChatScreen extends StatefulComponent {
 
 class ChatScreenState extends State<ChatScreen> {
   String _user;
-  InputValue _currentMessage;
+  InputValue _currentMessage = InputValue.empty;
 
   void initState() {
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _currentMessage = InputValue.empty;
     super.initState();
   }
 
-  void _handleMessageChanged(InputValue message) {
+  void _handleMessageChanged(InputValue value) {
     setState(() {
-      _currentMessage = message;
+      _currentMessage = value;
     });
   }
 
@@ -59,7 +58,6 @@ class ChatScreenState extends State<ChatScreen> {
               child: new Input(
                 value: _currentMessage,
                 hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
                 onSubmitted: _handleMessageAdded,
                 onChanged: _handleMessageChanged
               )

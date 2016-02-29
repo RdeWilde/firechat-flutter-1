@@ -21,7 +21,7 @@ class SettingsScreen extends StatelessComponent {
         style: Theme.of(context).text.body1.copyWith(fontSize: fontSize),
         child: new ScrollableList(
           itemExtent: 60.0,
-          children: [
+          children: <Widget>[
             new ListItem(
               key: new ValueKey(kSmallFontSize),
               onTap: () => onFontSizeChanged(kSmallFontSize),

@@ -13,7 +13,6 @@ class FirechatApp extends StatelessComponent {
     return new MaterialApp(
       title: "Firechat",
       theme: new ThemeData(
-        brightness: ThemeBrightness.light,
         primarySwatch: Colors.purple,
         accentColor: Colors.orangeAccent[400]
       ),
@@ -31,19 +30,17 @@ class ChatScreen extends StatefulComponent {
 
 class ChatScreenState extends State<ChatScreen> {
   String _user;
-  List<Map<String, String>> _messages;
-  InputValue _currentMessage;
+  List<Map<String, String>> _messages = <Map<String, String>>[];
+  InputValue _currentMessage = InputValue.empty;
 
   void initState() {
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _messages = <Map<String, String>>[];
-    _currentMessage = InputValue.empty;
     super.initState();
   }
 
-  void _handleMessageChanged(InputValue message) {
+  void _handleMessageChanged(InputValue value) {
     setState(() {
-      _currentMessage = message;
+      _currentMessage = value;
     });
   }
 
@@ -70,7 +67,6 @@ class ChatScreenState extends State<ChatScreen> {
               child: new Input(
                 value: _currentMessage,
                 hintText: 'Enter message',
-                keyboardType: KeyboardType.text,
                 onSubmitted: _handleMessageAdded,
                 onChanged: _handleMessageChanged
               )
@@ -95,7 +91,7 @@ class ChatScreenState extends State<ChatScreen> {
         center: new Text("Chatting as $_user")
       ),
       body: new Column(
-        children: [
+        children: <Widget>[
           new Flexible(
             child: new Block(
               padding: const EdgeDims.symmetric(horizontal: 8.0),
