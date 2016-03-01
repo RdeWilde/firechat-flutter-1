@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:math' as math;
+import 'dart:math' show Random;
 
 import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class FirechatAppState extends State {
   double _fontSize;
 
   void initState() {
-    _user = "Guest${new math.Random().nextInt(1000)}";
+    _user = "Guest${new Random().nextInt(1000)}";
     _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
     super.initState();
   }
@@ -32,7 +32,6 @@ class FirechatAppState extends State {
     return new MaterialApp(
       title: "Firechat",
       theme: new ThemeData(
-        brightness: ThemeBrightness.light,
         primarySwatch: Colors.purple,
         accentColor: Colors.orangeAccent[400]
       ),
