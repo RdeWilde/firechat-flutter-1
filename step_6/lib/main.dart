@@ -22,11 +22,10 @@ class FirechatAppState extends State {
   String _user;
   double _fontSize;
 
-  @override initState() {
-    super.initState();
-    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
+  void initState() {
     _user = "Guest${new math.Random().nextInt(1000)}";
-    _fontSize = kSmallFontSize;
+    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
+    super.initState();
   }
 
   Widget build(BuildContext context) {
