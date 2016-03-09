@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessComponent {
             new ListItem(
               key: new ValueKey(kSmallFontSize),
               onTap: () => onFontSizeChanged(kSmallFontSize),
-              center: new Text('Small font'),
+              primary: new Text('Small font'),
               right: new Radio<double>(
                 value: kSmallFontSize,
                 groupValue: fontSize,
@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessComponent {
             new ListItem(
               key: new ValueKey(kLargeFontSize),
               onTap: () => onFontSizeChanged(kLargeFontSize),
-              center: new Text('Large font'),
+              primary: new Text('Large font'),
               right: new Radio<double>(
                 value: kLargeFontSize,
                 groupValue: fontSize,

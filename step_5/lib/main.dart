@@ -45,7 +45,7 @@ class ChatScreenState extends State<ChatScreen> {
       child: new Block(children: <Widget>[
         new DrawerHeader(child: new Text(_user ?? '')),
         new DrawerItem(
-          icon: 'action/help',
+          icon: Icons.help,
           child: new Text('Help & Feedback'),
           onPressed: () {
             showDialog(
@@ -105,7 +105,7 @@ class ChatScreenState extends State<ChatScreen> {
             new Container(
               margin: const EdgeDims.symmetric(horizontal: 4.0),
               child: new IconButton(
-                icon: 'content/send',
+                icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
                 color: _isComposing ? themeData.accentColor : themeData.disabledColor
               )

@@ -76,7 +76,7 @@ class ChatScreenState extends State<ChatScreen> {
             new Container(
               margin: const EdgeDims.symmetric(horizontal: 4.0),
               child: new IconButton(
-                icon: 'content/send',
+                icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
                 color: _isComposing ? themeData.accentColor : themeData.disabledColor
               )
