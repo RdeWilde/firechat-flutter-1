@@ -1,7 +1,2 @@
 name: firechat_flutter
-material-design-icons:
-  - name: action/help
-  - name: action/settings
-  - name: content/send
-  - name: navigation/arrow_back
-  - name: navigation/menu
+uses-material-design: true
