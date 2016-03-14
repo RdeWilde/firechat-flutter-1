@@ -14,13 +14,13 @@ void main() {
       primarySwatch: Colors.purple,
       accentColor: Colors.orangeAccent[400]
     ),
-    routes: <String, RouteBuilder>{
-      '/': (RouteArguments args) => new ChatScreen()
+    routes: <String, WidgetBuilder>{
+      '/': (BuildContext context) => new ChatScreen()
     }
   ));
 }
 
-class ChatScreen extends StatefulComponent {
+class ChatScreen extends StatefulWidget {
   @override
   State createState() => new ChatScreenState();
 }
@@ -74,7 +74,7 @@ class ChatScreenState extends State<ChatScreen> {
               )
             ),
             new Container(
-              margin: const EdgeDims.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                 icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
@@ -89,14 +89,14 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget build(BuildContext context) {
     return new Scaffold(
-      toolBar: new ToolBar(
-        center: new Text("Chatting as $_user")
+      appBar: new AppBar(
+        title: new Text("Chatting as $_user")
       ),
       body: new Column(
         children: <Widget>[
           new Flexible(
             child: new Block(
-              padding: const EdgeDims.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               scrollAnchor: ViewportAnchor.end,
               children: _messages.map((m) => new ChatMessage(m)).toList()
             )
@@ -108,7 +108,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 }
 
-class ChatMessage extends StatelessComponent {
+class ChatMessage extends StatelessWidget {
   ChatMessage(Map<String, String> source)
     : name = source['name'], text = source['text'];
   final String name;
@@ -116,7 +116,7 @@ class ChatMessage extends StatelessComponent {
 
   Widget build(BuildContext context) {
     return new Container(
-      margin: const EdgeDims.all(3.0),
+      margin: const EdgeInsets.all(3.0),
       child: new Text("$name: $text")
     );
   }

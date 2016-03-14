@@ -12,7 +12,7 @@ import 'settings.dart';
 
 void main() => runApp(new FirechatApp());
 
-class FirechatApp extends StatefulComponent {
+class FirechatApp extends StatefulWidget {
   @override
   State createState() => new FirechatAppState();
 }
@@ -35,13 +35,13 @@ class FirechatAppState extends State {
         primarySwatch: Colors.purple,
         accentColor: Colors.orangeAccent[400]
       ),
-      routes: <String, RouteBuilder>{
-        '/': (RouteArguments args) => new ChatScreen(
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => new ChatScreen(
           fontSize: _fontSize,
           firebase: _firebase.root(),
           user: _user
         ),
-        '/settings': (RouteArguments args) => new SettingsScreen(
+        '/settings': (BuildContext context) => new SettingsScreen(
           fontSize: _fontSize,
           onFontSizeChanged: (double fontSize) {
             setState(() => _fontSize = fontSize);

@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(new MaterialApp(
     title: "Firechat",
-    routes: <String, RouteBuilder>{
-      '/': (RouteArguments args) => new Scaffold(
-        toolBar: new ToolBar(center: new Text("Firechat"))
+    routes: <String, WidgetBuilder>{
+      '/': (BuildContext context) => new Scaffold(
+        appBar: new AppBar(title: new Text("Firechat"))
       )
     }
   ));

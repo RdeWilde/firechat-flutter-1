@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
-class ChatMessage extends StatelessComponent {
+class ChatMessage extends StatelessWidget {
   ChatMessage(Map<String, String> source)
     : name = source['name'], text = source['text'];
   final String name;
@@ -15,13 +15,13 @@ class ChatMessage extends StatelessComponent {
 
   Widget build(BuildContext context) {
     return new Container(
-      margin: const EdgeDims.all(3.0),
+      margin: const EdgeInsets.all(3.0),
       child: new Text("$name: $text")
     );
   }
 }
 
-class ChatScreen extends StatefulComponent {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({ this.fontSize, this.user, this.firebase });
   final double fontSize;
   final String user;
@@ -120,7 +120,7 @@ class ChatScreenState extends State<ChatScreen> {
               )
             ),
             new Container(
-              margin: const EdgeDims.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                 icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
@@ -135,17 +135,17 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget build(BuildContext context) {
     return new Scaffold(
-      toolBar: new ToolBar(
-        center: new Text("Chatting as ${config.user}")
+      appBar: new AppBar(
+        title: new Text("Chatting as ${config.user}")
       ),
       drawer: _buildDrawer(context),
       body: new DefaultTextStyle(
-        style: Theme.of(context).text.body1.copyWith(fontSize: config.fontSize),
+        style: Theme.of(context).textTheme.body1.copyWith(fontSize: config.fontSize),
         child: new Column(
           children: <Widget>[
             new Flexible(
               child: new Block(
-                padding: const EdgeDims.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 scrollAnchor: ViewportAnchor.end,
                 children: _messages.map((m) => new ChatMessage(m)).toList()
               )
