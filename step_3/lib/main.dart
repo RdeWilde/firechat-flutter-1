@@ -6,21 +6,17 @@ import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new FirechatApp());
-
-class FirechatApp extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "Firechat",
-      theme: new ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.orangeAccent[400]
-      ),
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new ChatScreen(),
-      }
-    );
-  }
+void main() {
+  runApp(new MaterialApp(
+    title: "Firechat",
+    theme: new ThemeData(
+      primarySwatch: Colors.purple,
+      accentColor: Colors.orangeAccent[400]
+    ),
+    routes: <String, WidgetBuilder>{
+      '/': (BuildContext context) => new ChatScreen()
+    }
+  ));
 }
 
 class ChatScreen extends StatefulWidget {
@@ -29,12 +25,15 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _user;
-  List<Map<String, String>> _messages = <Map<String, String>>[];
+  String _name;
+  Color _color;
+  List<ChatMessage> _messages = <ChatMessage>[];
   InputValue _currentMessage = InputValue.empty;
 
+  @override
   void initState() {
-    _user = "Guest${new Random().nextInt(1000)}";
+    _name = "Guest${new Random().nextInt(1000)}";
+    _color = Colors.accents[new Random().nextInt(Colors.accents.length)][700];
     super.initState();
   }
 
@@ -45,13 +44,11 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleMessageAdded(InputValue value) {
-    Map<String, String> message = {
-      'name': _user,
-      'text': value.text,
-    };
     setState(() {
-      _messages.add(message);
       _currentMessage = InputValue.empty;
+      ChatUser sender = new ChatUser(name: _name, color: _color);
+      ChatMessage message = new ChatMessage(sender: sender, text: value.text);
+      _messages.add(message);
     });
   }
 
@@ -72,7 +69,7 @@ class ChatScreenState extends State<ChatScreen> {
               )
             ),
             new Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                 icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
@@ -88,15 +85,15 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Chatting as $_user")
+        title: new Text("Chatting as $_name")
       ),
       body: new Column(
         children: <Widget>[
           new Flexible(
             child: new Block(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: new EdgeInsets.symmetric(horizontal: 8.0),
               scrollAnchor: ViewportAnchor.end,
-              children: _messages.map((m) => new ChatMessage(m)).toList()
+              children: _messages.map((m) => new ChatMessageListItem(m)).toList()
             )
           ),
           _buildTextComposer(),
@@ -106,16 +103,31 @@ class ChatScreenState extends State<ChatScreen> {
   }
 }
 
-class ChatMessage extends StatelessWidget {
-  ChatMessage(Map<String, String> source)
-    : name = source['name'], text = source['text'];
+class ChatUser {
+  ChatUser({ this.name, this.color });
   final String name;
+  final Color color;
+}
+
+class ChatMessage {
+  ChatMessage({ this.sender, this.text });
+  final ChatUser sender;
   final String text;
+}
+
+class ChatMessageListItem extends StatelessWidget {
+  ChatMessageListItem(this.message);
+  final ChatMessage message;
 
   Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.all(3.0),
-      child: new Text("$name: $text")
+    return new ListItem(
+      dense: true,
+      leading: new CircleAvatar(
+        child: new Text(message.sender.name[0]),
+        backgroundColor: message.sender.color
+      ),
+      title: new Text(message.sender.name),
+      subtitle: new Text(message.text)
     );
   }
 }

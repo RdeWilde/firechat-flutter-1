@@ -25,11 +25,12 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _user;
+  String _name;
   InputValue _currentMessage = InputValue.empty;
 
+  @override
   void initState() {
-    _user = "Guest${new Random().nextInt(1000)}";
+    _name = "Guest${new Random().nextInt(1000)}";
     super.initState();
   }
 
@@ -62,7 +63,7 @@ class ChatScreenState extends State<ChatScreen> {
               )
             ),
             new Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                 icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
@@ -78,7 +79,7 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Chatting as $_user")
+        title: new Text("Chatting as $_name")
       ),
       body: _buildTextComposer()
     );

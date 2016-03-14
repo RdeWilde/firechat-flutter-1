@@ -7,47 +7,148 @@ import 'dart:math' show Random;
 import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
-import 'chat.dart';
-import 'settings.dart';
-
-void main() => runApp(new FirechatApp());
-
-class FirechatApp extends StatefulWidget {
-  @override
-  State createState() => new FirechatAppState();
+void main() {
+  runApp(new MaterialApp(
+    title: "Firechat",
+    theme: new ThemeData(
+      primarySwatch: Colors.purple,
+      accentColor: Colors.orangeAccent[400]
+    ),
+    routes: <String, WidgetBuilder>{
+      '/': (BuildContext context) => new ChatScreen()
+    }
+  ));
 }
 
-class FirechatAppState extends State {
-  Firebase _firebase;
+class ChatScreen extends StatefulWidget {
+  @override
+  State createState() => new ChatScreenState();
+}
+
+class ChatScreenState extends State<ChatScreen> {
+  Firebase _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
   String _user;
-  double _fontSize;
+  List<Map<String, String>> _messages = <Map<String, String>>[];
+  InputValue _currentMessage = InputValue.empty;
 
   void initState() {
     _user = "Guest${new Random().nextInt(1000)}";
-    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
+    _firebase.onChildAdded.listen((Event event) {
+      setState(() {
+        _messages.add(event.snapshot.val())
+      });
+    });
     super.initState();
   }
 
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "Firechat",
-      theme: new ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.orangeAccent[400]
-      ),
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => new ChatScreen(
-          fontSize: _fontSize,
-          firebase: _firebase.root(),
-          user: _user
-        ),
-        '/settings': (BuildContext context) => new SettingsScreen(
-          fontSize: _fontSize,
-          onFontSizeChanged: (double fontSize) {
-            setState(() => _fontSize = fontSize);
+  Widget _buildDrawer(BuildContext context) {
+    return new Drawer(
+      child: new Block(children: <Widget>[
+        new DrawerHeader(child: new Text(_user ?? '')),
+        new DrawerItem(
+          icon: Icons.help,
+          child: new Text('Help & Feedback'),
+          onPressed: () {
+            showDialog(
+              context: context,
+              child: new Dialog(
+                title: new Text('Need help?'),
+                content: new Text('Email flutter-discuss@googlegroups.com.'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: new Text('OK')
+                  ),
+                ]
+              )
+            );
           }
         )
-      }
+      ])
+    );
+  }
+
+  void _handleMessageChanged(InputValue value) {
+    setState(() {
+      _currentMessage = value;
+    });
+  }
+
+  void _handleMessageAdded(InputValue value) {
+    Map<String, String> message = {
+      'name': _user,
+      'text': value.text,
+    };
+    _firebase.push().set(message);
+    setState(() {
+      _currentMessage = InputValue.empty;
+    });
+  }
+
+  bool get _isComposing => _currentMessage.text.length > 0;
+
+  Widget _buildTextComposer() {
+    ThemeData themeData = Theme.of(context);
+    return new Column(
+      children: <Widget>[
+        new Row(
+          children: <Widget>[
+            new Flexible(
+              child: new Input(
+                value: _currentMessage,
+                hintText: 'Enter message',
+                onSubmitted: _handleMessageAdded,
+                onChanged: _handleMessageChanged
+              )
+            ),
+            new Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: new IconButton(
+                icon: Icons.send,
+                onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
+                color: _isComposing ? themeData.accentColor : themeData.disabledColor
+              )
+            )
+          ]
+        )
+      ]
+    );
+  }
+
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Chatting as $_user")
+      ),
+      drawer: _buildDrawer(context),
+      body: new Column(
+        children: <Widget>[
+          new Flexible(
+            child: new Block(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              scrollAnchor: ViewportAnchor.end,
+              children: _messages.map((m) => new ChatMessage(m)).toList()
+            )
+          ),
+          _buildTextComposer(),
+        ]
+      )
+    );
+  }
+}
+
+class ChatMessage extends StatelessWidget {
+  ChatMessage(Map<String, String> source)
+    : name = source['name'], text = source['text'];
+  final String name;
+  final String text;
+
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: const EdgeInsets.all(3.0),
+      child: new Text("$name: $text")
     );
   }
 }
