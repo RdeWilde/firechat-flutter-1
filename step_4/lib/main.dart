@@ -34,6 +34,7 @@ class ChatScreenState extends State<ChatScreen> {
   void dispose() {
     for (ChatMessage message in _messages)
       message.animationController.dispose();
+    super.dispose();
   }
 
   void _handleMessageChanged(InputValue value) {
