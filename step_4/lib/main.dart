@@ -106,7 +106,7 @@ class ChatScreenState extends State<ChatScreen> {
                   message: message,
                   animation: new CurvedAnimation(
                     parent: message.animationController,
-                    curve: Curves.easeIn
+                    curve: Curves.easeOut
                   )
                 );
               }).toList()
