@@ -11,7 +11,7 @@ void main() {
     title: "Firechat",
     theme: new ThemeData(
       primarySwatch: Colors.purple,
-      accentColor: Colors.orangeAccent[200]
+      accentColor: Colors.orangeAccent[400]
     ),
     routes: <String, WidgetBuilder>{
       '/': (BuildContext context) => new ChatScreen()
@@ -25,17 +25,12 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _user;
-
-  void initState() {
-    _user = "Guest${new Random().nextInt(1000)}";
-    super.initState();
-  }
+  String _name = "Guest${new Random().nextInt(1000)}";
 
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Chatting as $_user")
+        title: new Text("Chatting as $_name")
       )
     );
   }

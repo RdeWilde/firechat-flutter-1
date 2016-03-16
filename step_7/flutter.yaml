@@ -1,2 +1,4 @@
 name: firechat_flutter
 uses-material-design: true
+services:
+  - firebase

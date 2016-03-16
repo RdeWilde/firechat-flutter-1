@@ -3,3 +3,5 @@ description: A minimal chat app using Flutter and Firebase.
 dependencies:
   flutter:
     path: ../../flutter/packages/flutter
+  firebase:
+    git: git://github.com/flutter/firebase-dart.git

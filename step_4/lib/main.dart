@@ -4,7 +4,6 @@
 
 import 'dart:math' show Random;
 
-import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,18 +25,15 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  Firebase _firebase;
-  String _user;
-  List<Map<String, String>> _messages = <Map<String, String>>[];
+  String _name = "Guest${new Random().nextInt(1000)}";
+  Color _color = Colors.accents[new Random().nextInt(Colors.accents.length)][700];
+  List<ChatMessage> _messages = <ChatMessage>[];
   InputValue _currentMessage = InputValue.empty;
 
-  void initState() {
-    _user = "Guest${new Random().nextInt(1000)}";
-    _firebase = new Firebase("https://firechat-flutter.firebaseio.com/")
-      ..onChildAdded.listen((Event event) {
-      setState(() => _messages.add(event.snapshot.val()));
-    });
-    super.initState();
+  @override
+  void dispose() {
+    for (ChatMessage message in _messages)
+      message.animationController.dispose();
   }
 
   void _handleMessageChanged(InputValue value) {
@@ -47,13 +43,19 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleMessageAdded(InputValue value) {
-    Map<String, String> message = {
-      'name': _user,
-      'text': value.text,
-    };
-    _firebase.push().set(message);
     setState(() {
       _currentMessage = InputValue.empty;
+      AnimationController animationController = new AnimationController(
+        duration: new Duration(milliseconds: 700)
+      );
+      ChatUser sender = new ChatUser(name: _name, color: _color);
+      ChatMessage message = new ChatMessage(
+        sender: sender,
+        text: value.text,
+        animationController: animationController
+      );
+      _messages.add(message);
+      animationController.forward();
     });
   }
 
@@ -74,7 +76,7 @@ class ChatScreenState extends State<ChatScreen> {
               )
             ),
             new Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                 icon: Icons.send,
                 onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
@@ -90,15 +92,23 @@ class ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Chatting as $_user")
+        title: new Text("Chatting as $_name")
       ),
       body: new Column(
         children: <Widget>[
           new Flexible(
             child: new Block(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: new EdgeInsets.symmetric(horizontal: 8.0),
               scrollAnchor: ViewportAnchor.end,
-              children: _messages.map((m) => new ChatMessage(m)).toList()
+              children: _messages.map((ChatMessage message) {
+                return new ChatMessageListItem(
+                  message: message,
+                  animation: new CurvedAnimation(
+                    parent: message.animationController,
+                    curve: Curves.easeIn
+                  )
+                );
+              }).toList()
             )
           ),
           _buildTextComposer(),
@@ -108,16 +118,38 @@ class ChatScreenState extends State<ChatScreen> {
   }
 }
 
-class ChatMessage extends StatelessWidget {
-  ChatMessage(Map<String, String> source)
-    : name = source['name'], text = source['text'];
+class ChatUser {
+  ChatUser({ this.name, this.color });
   final String name;
+  final Color color;
+}
+
+class ChatMessage {
+  ChatMessage({ this.sender, this.text, this.animationController });
+  final ChatUser sender;
   final String text;
+  final AnimationController animationController;
+}
+
+class ChatMessageListItem extends AnimatedWidget {
+  ChatMessageListItem({ this.message, Animation animation })
+    : super(animation: animation);
+
+  final ChatMessage message;
 
   Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.all(3.0),
-      child: new Text("$name: $text")
+    return new SizeTransition(
+      sizeFactor: animation,
+      axisAlignment: 0.0,
+      child: new ListItem(
+        dense: true,
+        leading: new CircleAvatar(
+          child: new Text(message.sender.name[0]),
+          backgroundColor: message.sender.color
+        ),
+        title: new Text(message.sender.name),
+        subtitle: new Text(message.text)
+      )
     );
   }
 }
