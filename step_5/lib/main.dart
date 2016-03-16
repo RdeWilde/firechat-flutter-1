@@ -121,15 +121,7 @@ class ChatScreenState extends State<ChatScreen> {
             child: new Block(
               padding: new EdgeInsets.symmetric(horizontal: 8.0),
               scrollAnchor: ViewportAnchor.end,
-              children: _messages.map((ChatMessage message) {
-                return new ChatMessageListItem(
-                  message: message,
-                  animation: new CurvedAnimation(
-                    parent: message.animationController,
-                    curve: Curves.easeOut
-                  )
-                );
-              }).toList()
+              children: _messages.map((m) => new ChatMessageListItem(m)).toList()
             )
           ),
           _buildTextComposer(),
@@ -152,15 +144,17 @@ class ChatMessage {
   final AnimationController animationController;
 }
 
-class ChatMessageListItem extends AnimatedWidget {
-  ChatMessageListItem({ this.message, Animation animation })
-    : super(animation: animation);
+class ChatMessageListItem extends StatelessWidget {
+  ChatMessageListItem(this.message);
 
   final ChatMessage message;
 
   Widget build(BuildContext context) {
     return new SizeTransition(
-      sizeFactor: animation,
+      sizeFactor: new CurvedAnimation(
+        parent: message.animationController,
+        curve: Curves.easeOut
+      ),
       axisAlignment: 0.0,
       child: new ListItem(
         dense: true,
