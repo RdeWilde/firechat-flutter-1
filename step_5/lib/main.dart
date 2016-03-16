@@ -34,6 +34,7 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    super.initState();
     _firebase.onChildAdded.listen((Event event) {
       setState(() {
         var val = event.snapshot.val();
@@ -53,13 +54,13 @@ class ChatScreenState extends State<ChatScreen> {
         animationController.forward();
       });
     });
-    super.initState();
   }
 
   @override
   void dispose() {
     for (ChatMessage message in _messages)
       message.animationController.dispose();
+    super.dispose();
   }
 
   void _handleMessageChanged(InputValue value) {
