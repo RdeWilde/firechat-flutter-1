@@ -38,7 +38,7 @@ class ChatScreenState extends State<ChatScreen> {
       setState(() {
         var val = event.snapshot.val();
         AnimationController animationController = new AnimationController(
-          duration: new Duration(milliseconds: 300)
+          duration: new Duration(milliseconds: 700)
         );
         ChatUser sender = new ChatUser(
           name: val['sender']['name'],

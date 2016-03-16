@@ -46,7 +46,7 @@ class ChatScreenState extends State<ChatScreen> {
     setState(() {
       _currentMessage = InputValue.empty;
       AnimationController animationController = new AnimationController(
-        duration: new Duration(milliseconds: 300)
+        duration: new Duration(milliseconds: 700)
       );
       ChatUser sender = new ChatUser(name: _name, color: _color);
       ChatMessage message = new ChatMessage(
