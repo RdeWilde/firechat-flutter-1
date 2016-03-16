@@ -25,14 +25,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _name;
+  String _name = "Guest${new Random().nextInt(1000)}";
   InputValue _currentMessage = InputValue.empty;
-
-  @override
-  void initState() {
-    _name = "Guest${new Random().nextInt(1000)}";
-    super.initState();
-  }
 
   void _handleMessageChanged(InputValue value) {
     setState(() {

@@ -25,17 +25,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _name;
-  Color _color;
+  String _name = "Guest${new Random().nextInt(1000)}";
+  Color _color = Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
   InputValue _currentMessage = InputValue.empty;
-
-  @override
-  void initState() {
-    _name = "Guest${new Random().nextInt(1000)}";
-    _color = Colors.accents[new Random().nextInt(Colors.accents.length)][700];
-    super.initState();
-  }
 
   void _handleMessageChanged(InputValue value) {
     setState(() {

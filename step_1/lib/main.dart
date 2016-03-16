@@ -25,13 +25,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  String _name;
-
-  @override
-  void initState() {
-    _name = "Guest${new Random().nextInt(1000)}";
-    super.initState();
-  }
+  String _name = "Guest${new Random().nextInt(1000)}";
 
   Widget build(BuildContext context) {
     return new Scaffold(
