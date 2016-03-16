@@ -44,27 +44,23 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget _buildTextComposer() {
     ThemeData themeData = Theme.of(context);
-    return new Column(
+    return new Row(
       children: <Widget>[
-        new Row(
-          children: <Widget>[
-            new Flexible(
-              child: new Input(
-                value: _currentMessage,
-                hintText: 'Enter message',
-                onSubmitted: _handleMessageAdded,
-                onChanged: _handleMessageChanged
-              )
-            ),
-            new Container(
-              margin: new EdgeInsets.symmetric(horizontal: 4.0),
-              child: new IconButton(
-                icon: Icons.send,
-                onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
-                color: _isComposing ? themeData.accentColor : themeData.disabledColor
-              )
-            )
-          ]
+        new Flexible(
+          child: new Input(
+            value: _currentMessage,
+            hintText: 'Enter message',
+            onSubmitted: _handleMessageAdded,
+            onChanged: _handleMessageChanged
+          )
+        ),
+        new Container(
+          margin: new EdgeInsets.symmetric(horizontal: 4.0),
+          child: new IconButton(
+            icon: Icons.send,
+            onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
+            color: _isComposing ? themeData.accentColor : themeData.disabledColor
+          )
         )
       ]
     );
