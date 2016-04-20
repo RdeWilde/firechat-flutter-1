@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(new MaterialApp(
     title: "Firechat",
-    routes: <String, WidgetBuilder>{
-      '/': (BuildContext context) => new Scaffold(
-        appBar: new AppBar(title: new Text("Firechat"))
-      )
-    }
+    home: new Scaffold(
+      appBar: new AppBar(title: new Text("Firechat"))
+    )
   ));
 }

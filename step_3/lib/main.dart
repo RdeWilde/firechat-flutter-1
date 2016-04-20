@@ -13,9 +13,7 @@ void main() {
       primarySwatch: Colors.purple,
       accentColor: Colors.orangeAccent[400]
     ),
-    routes: <String, WidgetBuilder>{
-      '/': (BuildContext context) => new ChatScreen()
-    }
+    home: new ChatScreen()
   ));
 }
 
