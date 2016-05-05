@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_id": "firebase-flutter-test",
+    "project_number": "569834062290",
+    "name": "Firebase Flutter Test",
+    "firebase_url": "https://gh-flutter-test.firebaseio.com",
+    "storage_bucket": "firebase-flutter-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "android_app_id": "1:569834062290:android:e0c732c7e4a393d5",
+        "client_id": "android:org.domokit.sky.shell.SkyApplication",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "org.domokit.sky.shell.SkyApplication",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569834062290-rmsctat12epqv98uu2lm2evu43nejh6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.domokit.sky.shell.SkyApplication",
+            "certificate_hash": "8A4E194F5BFC3FB1075E7DAAE8DCDDD526FDE207"
+          }
+        },
+        {
+          "client_id": "569834062290-4f2lq9vvj27dbjbucdbrd0vdej170pr7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD349xFuq1iEostYUbBAJWx3J2rVMvbhGs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569834062290-a622mab5sonjds4bt72mcs3uudh36dk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.flutter.runner.Runner",
+                "app_store_id": ""
+              }
+            },
+            {
+              "client_id": "569834062290-4f2lq9vvj27dbjbucdbrd0vdej170pr7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 2,
+          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
+          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
