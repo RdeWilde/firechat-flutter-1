@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:math' show Random;
+import 'dart:io';
 
 import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,13 @@ class ChatScreenState extends State<ChatScreen> {
   String _name = "Guest${new Random().nextInt(1000)}";
   Color _color = Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
-  Firebase _firebase = new Firebase("https://firechat-flutter.firebaseio.com/");
+  DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
   InputValue _currentMessage = InputValue.empty;
 
   @override
   void initState() {
     super.initState();
-    _firebase.onChildAdded.listen((Event event) {
+    _messagesReference.onChildAdded.listen((Event event) {
       setState(() {
         var val = event.snapshot.val();
         AnimationController animationController = new AnimationController(
@@ -72,7 +73,7 @@ class ChatScreenState extends State<ChatScreen> {
       'sender': { 'name': _name, 'color': _color.value },
       'text': value.text,
     };
-    _firebase.push().set(message);
+    _messagesReference.push().set(message);
     setState(() {
       _currentMessage = InputValue.empty;
     });

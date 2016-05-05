@@ -57,7 +57,7 @@ class ChatScreenState extends State<ChatScreen> {
           child: new IconButton(
             icon: Icons.send,
             onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
-            color: _isComposing ? themeData.accentColor : themeData.disabledColor
+            color: themeData.accentColor
           )
         )
       ]
