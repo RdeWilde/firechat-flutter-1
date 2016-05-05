@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Runner</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.flutter.googleSignIn.example</string>
+	<string>io.flutter.runner.Runner</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>io.flutter.googleSignIn.example</string>
+				<string>io.flutter.runner.Runner</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.946753052256-j58q7kn21j491vfn5m5v56bblgcpevgg</string>
+				<string>com.googleusercontent.apps.569834062290-a622mab5sonjds4bt72mcs3uudh36dk7</string>
 			</array>
 		</dict>
 	</array>
