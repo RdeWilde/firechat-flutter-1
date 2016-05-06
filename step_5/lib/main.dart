@@ -34,6 +34,7 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseAuth.instance.signInAnonymously();
     _messagesReference.onChildAdded.listen((Event event) {
       setState(() {
         var val = event.snapshot.val();
