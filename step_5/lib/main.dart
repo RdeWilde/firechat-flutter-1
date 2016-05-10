@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:math' show Random;
-import 'dart:io';
 
 import 'package:firebase/firebase.dart';
 import 'package:flutter/material.dart';
