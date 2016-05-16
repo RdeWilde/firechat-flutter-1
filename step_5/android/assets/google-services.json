@@ -1,20 +1,16 @@
 {
   "project_info": {
-    "project_id": "firebase-flutter-test",
     "project_number": "569834062290",
-    "name": "Firebase Flutter Test",
     "firebase_url": "https://gh-flutter-test.firebaseio.com",
+    "project_id": "firebase-flutter-test",
     "storage_bucket": "firebase-flutter-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "android_app_id": "1:569834062290:android:e0c732c7e4a393d5",
-        "client_id": "android:org.domokit.sky.shell.SkyApplication",
-        "client_type": 1,
+        "mobilesdk_app_id": "1:569834062290:android:e0c732c7e4a393d5",
         "android_client_info": {
-          "package_name": "org.domokit.sky.shell.SkyApplication",
-          "certificate_hash": []
+          "package_name": "org.domokit.sky.shell.SkyApplication"
         }
       },
       "oauth_client": [
@@ -40,38 +36,27 @@
         "analytics_service": {
           "status": 1
         },
-        "cloud_messaging_service": {
-          "status": 2,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 2,
           "other_platform_oauth_client": [
             {
+              "client_id": "569834062290-4f2lq9vvj27dbjbucdbrd0vdej170pr7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
               "client_id": "569834062290-a622mab5sonjds4bt72mcs3uudh36dk7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "io.flutter.runner.Runner",
-                "app_store_id": ""
+                "bundle_id": "io.flutter.runner.Runner"
               }
-            },
-            {
-              "client_id": "569834062290-4f2lq9vvj27dbjbucdbrd0vdej170pr7.apps.googleusercontent.com",
-              "client_type": 3
             }
           ]
         },
-        "google_signin_service": {
-          "status": 2
-        },
         "ads_service": {
-          "status": 2,
-          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
-          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+          "status": 2
         }
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }
