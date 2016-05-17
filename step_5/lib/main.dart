@@ -35,23 +35,12 @@ class ChatScreenState extends State<ChatScreen> {
     super.initState();
     FirebaseAuth.instance.signInAnonymously().then((user) {
       _messagesReference.onChildAdded.listen((Event event) {
-        setState(() {
-          var val = event.snapshot.val();
-          AnimationController animationController = new AnimationController(
-            duration: new Duration(milliseconds: 700)
-          );
-          ChatUser sender = new ChatUser(
-            name: val['sender']['name'],
-            color: new Color(val['sender']['color'])
-          );
-          ChatMessage message = new ChatMessage(
-            sender: sender,
-            text: val['text'],
-            animationController: animationController
-          );
-          _messages.add(message);
-          animationController.forward();
-        });
+        var val = event.snapshot.val();
+        _addMessage(
+          name: val['sender']['name'],
+          color: new Color(val['sender']['color']),
+          text: val['text']
+        );
       });
     });
   }
@@ -70,14 +59,30 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   void _handleMessageAdded(InputValue value) {
+    setState(() {
+      _currentMessage = InputValue.empty;
+    });
     var message = {
       'sender': { 'name': _name, 'color': _color.value },
       'text': value.text,
     };
     _messagesReference.push().set(message);
+  }
+
+  void _addMessage({ String name, Color color, String text }) {
+    AnimationController animationController = new AnimationController(
+      duration: new Duration(milliseconds: 700)
+    );
+    ChatUser sender = new ChatUser(name: name, color: color);
+    ChatMessage message = new ChatMessage(
+      sender: sender,
+      text: text,
+      animationController: animationController
+    );
     setState(() {
-      _currentMessage = InputValue.empty;
+      _messages.add(message);
     });
+    animationController.forward();
   }
 
   bool get _isComposing => _currentMessage.text.length > 0;
