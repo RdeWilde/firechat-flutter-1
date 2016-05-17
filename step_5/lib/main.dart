@@ -33,24 +33,25 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.signInAnonymously();
-    _messagesReference.onChildAdded.listen((Event event) {
-      setState(() {
-        var val = event.snapshot.val();
-        AnimationController animationController = new AnimationController(
-          duration: new Duration(milliseconds: 700)
-        );
-        ChatUser sender = new ChatUser(
-          name: val['sender']['name'],
-          color: new Color(val['sender']['color'])
-        );
-        ChatMessage message = new ChatMessage(
-          sender: sender,
-          text: val['text'],
-          animationController: animationController
-        );
-        _messages.add(message);
-        animationController.forward();
+    FirebaseAuth.instance.signInAnonymously().then((user) {
+      _messagesReference.onChildAdded.listen((Event event) {
+        setState(() {
+          var val = event.snapshot.val();
+          AnimationController animationController = new AnimationController(
+            duration: new Duration(milliseconds: 700)
+          );
+          ChatUser sender = new ChatUser(
+            name: val['sender']['name'],
+            color: new Color(val['sender']['color'])
+          );
+          ChatMessage message = new ChatMessage(
+            sender: sender,
+            text: val['text'],
+            animationController: animationController
+          );
+          _messages.add(message);
+          animationController.forward();
+        });
       });
     });
   }
