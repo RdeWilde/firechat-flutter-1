@@ -4,4 +4,4 @@ dependencies:
   flutter:
     path: ../../flutter/packages/flutter
   firebase:
-    git: git://github.com/flutter/firebase2-dart.git
+    git: git://github.com/flutter/firebase-dart.git
