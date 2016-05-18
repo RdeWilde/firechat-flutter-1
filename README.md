@@ -11,7 +11,7 @@ These projects assume that your checkout of Flutter is in an adjacent directory 
 Firechat requires Firebase in order to store data. You can
 [sign up](https://www.firebase.com/signup/?utm_source=firechat) for a free account.
 
-The [firebase-dart](https://github.com/flutter/firebase-dart) library is [documented here](https://www.dartdocs.org/documentation/firebase/latest/firebase/firebase-library.html).
+The [firebase-dart](https://github.com/flutter/firebase-dart) library is [documented here](https://flutter.github.io/firebase-dart).
 
 ## Getting Started with Flutter
 
@@ -19,8 +19,6 @@ For help getting started with Flutter, view the [Flutter documentation](http://f
 
 ## Building
 
-In the directory of the step you want to build, run ```pub get``` and ```flutter start```. If you're running step 6, you should see this on your device:
-
-![Screenshot](screenshot_android.png)
+In the directory of the step you want to build, run ```pub get``` and ```flutter start```.
 
 Use ```flutter start --no-checked``` if you want to remove the "Slow Mode" banner and improve performance.
