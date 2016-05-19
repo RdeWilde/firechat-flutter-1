@@ -10,13 +10,21 @@ mobile apps for iOS and Android from a single codebase.
 This repo is a companion to the
 [Build cross-platform Firebase apps with Flutter][codelab]
 codelab. This repo is organized as a series
-of steps of increasing complexity.
+of steps of increasing complexity. If you just want to see
+the Firechat for Flutter app working, you can run
+the app in the `step_5` directory after you follow
+the setup instructions below.
 
 ## Setup
 
-To build and run this app, you will
-first need to install Flutter and sign up
-for a free Firebase account.
+To build and run the app in the `step_5` directory,
+you will first need to install Flutter, sign up
+for a free Firebase account,
+and configure your app.
+
+Note: If you are following the [codelab][codelab], then you
+can skip these setup instructions. The codelab leads you
+through the setup.
 
 ### Installing Flutter
 
@@ -29,11 +37,20 @@ directory nammed `flutter`.
 If it's somewhere else, you need to edit the path in
 pubspec.yaml for each of the steps.
 
-### Getting Started with Firebase
+### Creating a Firebase project
 
-Firechat requires Firebase in order to store data. You can
-[sign up](https://firebase.google.com/) for a
-free account.
+Firechat requires Firebase in order to store data.
+[Create a new Firebase project](https://firebase.google.com/)
+in order to generate a unique project name.
+
+### Configuring your app
+
+Follow [step 12 of the codelab](https://codelabs.developers.google.com/codelabs/flutter/index.html#11)
+in order to configure this app to connect to your Firebase project.
+
+If you do not properly configure your local copy of the Firechat app to
+use your new Firebase project, you will likely encounter rate limiting
+issues.
 
 ## Documentation
 
