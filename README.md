@@ -20,7 +20,7 @@ is [documented here](https://flutter.github.io/firebase-dart).
 
 ## Getting Started with Flutter
 
-For help getting started with Flutter, visit [https://flutter.io/][].
+For help getting started with Flutter, visit [flutter.io](https://flutter.io/).
 
 ## Building
 
