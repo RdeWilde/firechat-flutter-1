@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application android:name="org.domokit.sky.shell.SkyApplication" android:label="firechat_flutter" android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.gms.version" android:value="9060000" />
+        <meta-data android:name="com.google.android.gms.version" android:value="9080000" />
         <activity android:name="org.domokit.sky.shell.SkyActivity"
                   android:launchMode="singleTask"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
