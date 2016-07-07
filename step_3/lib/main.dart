@@ -60,9 +60,9 @@ class ChatScreenState extends State<ChatScreen> {
         new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
-            icon: Icons.send,
+            icon: new Icon(Icons.send),
             onPressed: _isComposing ? () => _handleMessageAdded(_currentMessage) : null,
-            color: _isComposing ? themeData.accentColor : themeData.disabledColor
+            color: themeData.accentColor
           )
         )
       ]
